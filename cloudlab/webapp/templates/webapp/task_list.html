@@ -1,0 +1,33 @@
+{% extends 'webapp/base.html' %}
+
+{% block content %}
+<h2>Task List</h2>
+<a href="{% url 'add_task' %}" class="btn">Add New Task</a>
+
+{% for task in tasks %}
+<div class="task">
+    <h3>{{ task.title }}</h3>
+    <p>{{ task.description }}</p>
+    <small>Created: {{ task.created_at }}</small>
+</div>
+{% endfor %}
+{% endblock %}
+Create webapp/templates/webapp/add_task.html:
+{% extends 'webapp/base.html' %}
+
+{% block content %}
+<h2>Add New Task</h2>
+<form method="post">
+    {% csrf_token %}
+    <p>
+        <label>Title:</label><br>
+        <input type="text" name="title" required style="width: 100%; padding: 5px;">
+    </p>
+    <p>
+        <label>Description:</label><br>
+        <textarea name="description" rows="4" style="width: 100%; padding: 5px;"></textarea>
+    </p>
+    <button type="submit" class="btn">Add Task</button>
+    <a href="{% url 'task_list' %}">Back to List</a>
+</form>
+{% endblock %}
